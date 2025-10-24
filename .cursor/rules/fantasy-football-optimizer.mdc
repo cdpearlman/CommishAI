@@ -1,0 +1,95 @@
+---
+description: Fantasy Football roster optimization workflow using ESPN API and Tavily search
+globs: []
+alwaysApply: true
+---
+
+# Fantasy Football Roster Optimization Workflow
+
+When optimizing a fantasy football roster, follow this 7-phase process systematically.
+
+## Phase 1: Initial Assessment
+- Get current roster with `get_roster`
+- Quick scan all players with `summarize_players` (entire roster at once)
+- Identify injuries, bye weeks, low projections, and immediate concerns
+
+## Phase 2: Identify Weaknesses & Opportunities
+- Pinpoint positions needing improvement (low projections, injuries, byes, underperformers)
+- Research specific concerns: `injury_report` for injured players, `analyze_schedule` for playoff considerations
+- Create prioritized list of positions/players needing attention
+
+## Phase 3: Research Waiver Wire Options
+- Get expert recommendations: `find_best_adds` for general or position-specific pickups
+- Verify availability: `is_available` for each recommended player
+- Cross-reference: `get_top_available` to compare ESPN projections with expert picks
+- Create ranked list of 5-10 available players addressing roster needs
+
+## Phase 4: Deep Dive Analysis
+- Comprehensive analysis: `analyze_player` for top 3-5 waiver targets
+- Schedule evaluation: `analyze_schedule` for playoff-bound teams or long-term holds
+- Weather check: `check_weather` for games in potentially bad conditions
+- Produce detailed evaluation of each target with pros/cons
+
+## Phase 5: Identify Drop Candidates
+- Consider players with: low projections, unclear injury timelines, declining playing time, poor schedules, duplicative positions
+- Research drop candidates: `analyze_player` to confirm declining role and no favorable situations ahead
+- Rank 2-3 droppable players with justification
+
+## Phase 6: Make Final Comparisons
+- Direct comparisons: `compare_players` for close add/drop or start/sit decisions
+- Lineup optimization: compare starter options considering matchups, boom/bust potential, injury status, weather
+- Generate clear recommendations with reasoning
+
+## Phase 7: Present Final Recommendations
+
+Format recommendations as:
+
+**PRIORITY ADDS** (in order)
+1. [Player Name] ([Position], [Team])
+   - Why: [Opportunity, matchup, expert consensus]
+   - Drop For: [Specific player]
+   - Upside: [Projection/tier ranking]
+
+**LINEUP RECOMMENDATIONS**
+- Start: [Player] - [Reason]
+- Sit: [Player] - [Reason]
+
+**INJURY WATCH**
+- [Player] - [Status and fantasy impact]
+
+**SCHEDULE NOTES**
+- [Player] - [Playoff schedule assessment]
+
+## Decision-Making Framework
+
+**Priority Order for Adds:**
+1. Fill immediate needs (injuries, byes)
+2. Target high-upside players with opportunity
+3. Improve playoff schedule (if applicable)
+4. Add depth at weak positions
+5. Speculative stashes
+
+**When to Drop:**
+- Losing playing time consistently
+- Long-term injury (4+ weeks, longer tolerance for high-impact players)
+- Passed on depth chart
+- Roster crunch for much better option
+- Poor playoff schedule + much better options available
+
+**Start/Sit Hierarchy:**
+1. Health status (healthy > questionable)
+2. Matchup quality (vs. defense ranking)
+3. Volume/opportunity (touches, targets, snaps)
+4. Game script (shootout > blowout)
+5. Weather conditions (if relevant)
+
+## Essential Reminders
+
+- Always verify availability before recommending adds
+- Ask for league scoring format (PPR/Half-PPR/Standard) if not specified
+- Ask for current week number if unclear
+- Provide reasoning for every recommendation
+- Balance weekly needs with long-term strategy
+- Use full player names ("Saquon Barkley" not "Barkley")
+- Prioritize actionable advice over information overload
+- Ask clarifying questions if user needs are unclear (record, position needs, league ID/team ID)

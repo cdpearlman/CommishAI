@@ -1,0 +1,56 @@
+# ESPN Fantasy Football MCP Server - Environment Variables Template
+# 
+# Copy this file to .env and fill in your actual credentials
+# File location: fantasy_football_server/.env
+
+# =============================================================================
+# ESPN FANTASY FOOTBALL API CREDENTIALS
+# =============================================================================
+# Optional - only needed for PRIVATE ESPN leagues
+# Public ESPN leagues work without authentication
+#
+# To get these values:
+# 1. Log into ESPN Fantasy Football in your browser
+# 2. Open Developer Tools (F12)
+# 3. Go to Application tab (Chrome) or Storage tab (Firefox)
+# 4. Click on Cookies -> https://fantasy.espn.com
+# 5. Find and copy the values below
+#
+# Note: These cookies expire periodically and will need to be refreshed
+
+ESPN_S2=your_espn_s2_cookie_here
+ESPN_SWID=your_espn_swid_cookie_here
+
+
+# =============================================================================
+# TAVILY SEARCH API CREDENTIALS
+# =============================================================================
+# Required for web search functionality (player analysis, injury reports, etc.)
+#
+# To get your API key:
+# 1. Go to https://tavily.com/
+# 2. Sign up for a free account
+# 3. Copy your API key from the dashboard
+#
+# Note: Free tier includes 1000 searches per month
+
+TAVILY_API_KEY=your_tavily_api_key_here
+
+
+# =============================================================================
+# USAGE NOTES
+# =============================================================================
+#
+# After setting up this file:
+# 1. Save it as ".env" (not "env_template.txt")
+# 2. Make sure it's in the fantasy_football_server directory
+# 3. Restart Cursor to load the MCP server with your credentials
+#
+# For public leagues:
+# - You don't need to set any credentials, just leave this file empty or use placeholder values
+#
+# Security:
+# - Never commit the .env file to version control
+# - The .gitignore file already excludes .env files
+# - Keep your credentials secure and don't share them
+

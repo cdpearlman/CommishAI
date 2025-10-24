@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "fantasy-football": {
+      "command": "python",
+      "args": [
+        "fantasy_football_server/server.py"
+      ]
+    }
+  }
+}
+
