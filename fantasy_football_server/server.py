@@ -16,6 +16,11 @@ from tavily_client import TavilyFantasyClient
 env_path = Path(__file__).parent / ".env"
 load_dotenv(dotenv_path=env_path)
 
+# Extract league configuration from environment variables
+LEAGUE_ID = int(os.getenv("LEAGUE_ID", "0"))
+TEAM_ID = int(os.getenv("TEAM_ID", "0"))
+YEAR = int(os.getenv("YEAR", "2025"))
+
 # Initialize FastMCP server
 mcp = FastMCP("ESPN Fantasy Football")
 
@@ -45,65 +50,63 @@ def get_tavily_client() -> TavilyFantasyClient:
 # ============================================================================
 
 @mcp.tool()
-def get_roster(league_id: int, team_id: int, year: int = 2024) -> str:
+def get_roster() -> str:
     """
-    Get the full roster for an ESPN Fantasy Football team.
-
-    Args:
-        league_id: ESPN league ID (numeric)
-        team_id: Team ID within the league (1-indexed, e.g., 1 for first team)
-        year: Season year (default: 2024)
+    Get the full roster for your ESPN Fantasy Football team.
 
     Returns:
         JSON string with roster grouped by position, including player stats and injury info
     """
     try:
+        if LEAGUE_ID == 0 or TEAM_ID == 0:
+            return json.dumps({"error": "LEAGUE_ID and TEAM_ID must be set in .env file"})
+        
         client = get_espn_client()
-        roster = client.get_roster(league_id, team_id, year)
+        roster = client.get_roster(LEAGUE_ID, TEAM_ID, YEAR)
         return json.dumps(roster, indent=2)
     except Exception as e:
         return json.dumps({"error": str(e)})
 
 
 @mcp.tool()
-def is_available(league_id: int, player_name: str, year: int = 2024) -> bool:
+def is_available(player_name: str) -> bool:
     """
     Check if a player is available on the ESPN Fantasy waiver wire.
 
     Args:
-        league_id: ESPN league ID (numeric)
         player_name: Full name of the player to check (e.g., "Patrick Mahomes")
-        year: Season year (default: 2024)
 
     Returns:
         True if player is available, False if rostered or not found
     """
     try:
+        if LEAGUE_ID == 0:
+            return False
+        
         client = get_espn_client()
-        return client.is_available(league_id, player_name, year)
+        return client.is_available(LEAGUE_ID, player_name, YEAR)
     except Exception as e:
         return False
 
 
 @mcp.tool()
-def get_top_available(
-    league_id: int, position: str, count: int = 10, year: int = 2024
-) -> str:
+def get_top_available(position: str, count: int = 10) -> str:
     """
     Get the top N available players for a position in ESPN Fantasy.
 
     Args:
-        league_id: ESPN league ID (numeric)
         position: Position code (QB, RB, WR, TE, K, DEF or D/ST)
         count: Number of players to return (default: 10)
-        year: Season year (default: 2024)
 
     Returns:
         JSON string with list of top available players sorted by projected points
     """
     try:
+        if LEAGUE_ID == 0:
+            return json.dumps({"error": "LEAGUE_ID must be set in .env file"})
+        
         client = get_espn_client()
-        players = client.get_top_available(league_id, position, count, year)
+        players = client.get_top_available(LEAGUE_ID, position, count, YEAR)
         return json.dumps(players, indent=2)
     except Exception as e:
         return json.dumps({"error": str(e)})
@@ -189,32 +192,6 @@ def analyze_player(
 
 
 @mcp.tool()
-def compare_players(
-    player1: str, player2: str, week: int, scoring_format: str = "PPR"
-) -> str:
-    """
-    Compare two players for start/sit decisions.
-
-    Args:
-        player1: First player name
-        player2: Second player name
-        week: Week number
-        scoring_format: League scoring format (PPR, Half-PPR, Standard)
-
-    Returns:
-        JSON string with head-to-head comparison and expert recommendations (4-6 results)
-    """
-    try:
-        client = get_tavily_client()
-        results = client.search_player_comparison(
-            player1, player2, week, scoring_format, max_results=5
-        )
-        return json.dumps(results, indent=2)
-    except Exception as e:
-        return json.dumps({"error": str(e)})
-
-
-@mcp.tool()
 def find_best_adds(
     week: int, position: str = "all", scoring_format: str = "PPR"
 ) -> str:
@@ -240,42 +217,40 @@ def find_best_adds(
 
 
 @mcp.tool()
-def analyze_schedule(player_name: str, weeks: str = "playoffs") -> str:
+def search_player_usage_trends(player_name: str, week: int) -> str:
     """
-    Analyze a player's upcoming schedule strength.
+    Search for player usage trends and snap share data.
 
     Args:
         player_name: Full name of the player
-        weeks: Which weeks to analyze ('playoffs' for weeks 15-17, or 'ROS' for rest of season)
+        week: Week number
 
     Returns:
-        JSON string with schedule analysis and outlook (3-5 results)
+        JSON string with usage trend data (5 results)
     """
     try:
         client = get_tavily_client()
-        results = client.search_schedule_strength(
-            player_name, weeks, max_results=4
-        )
+        results = client.search_player_usage_trends(player_name, week, max_results=5)
         return json.dumps(results, indent=2)
     except Exception as e:
         return json.dumps({"error": str(e)})
 
 
 @mcp.tool()
-def check_weather(game_location: str, week: int) -> str:
+def search_vegas_odds(player_or_team_name: str, week: int) -> str:
     """
-    Get weather forecast and fantasy impact for a game location.
+    Search for Vegas odds and betting lines.
 
     Args:
-        game_location: City or stadium name (e.g., 'Buffalo', 'Green Bay')
+        player_or_team_name: Player or team name
         week: Week number
 
     Returns:
-        JSON string with weather conditions and fantasy impact (2-3 results)
+        JSON string with odds information (2 results)
     """
     try:
         client = get_tavily_client()
-        results = client.search_weather(game_location, week, max_results=3)
+        results = client.search_vegas_odds(player_or_team_name, week, max_results=2)
         return json.dumps(results, indent=2)
     except Exception as e:
         return json.dumps({"error": str(e)})

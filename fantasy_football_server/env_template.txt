@@ -38,6 +38,25 @@ TAVILY_API_KEY=your_tavily_api_key_here
 
 
 # =============================================================================
+# FANTASY FOOTBALL LEAGUE CONFIGURATION
+# =============================================================================
+# Required for ESPN Fantasy Football tools
+#
+# To find your league and team IDs:
+# 1. Go to your ESPN Fantasy Football league page
+# 2. Look at the URL: https://fantasy.espn.com/football/league?leagueId=XXXXXX
+# 3. The league ID is the number after "leagueId="
+# 4. For team ID, go to your team page and look at the URL
+# 5. The team ID is usually 1-12 (or however many teams are in your league)
+#
+# Year should be the current NFL season year (e.g., 2024)
+
+LEAGUE_ID=your_league_id_here
+TEAM_ID=your_team_id_here
+YEAR=2025
+
+
+# =============================================================================
 # USAGE NOTES
 # =============================================================================
 #

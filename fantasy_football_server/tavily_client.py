@@ -13,17 +13,17 @@ class TavilyFantasyClient:
         "espn.com",
         "fantasypros.com",
         "nfl.com",
-        "rotoworld.com",
+        "nbcsports.com",
         "sports.yahoo.com",
+        "ftnfantasy.com",
+        "playerprofiler.com"
     ]
     
     TIER_2_SOURCES = [
-        "theathletic.com",
-        "pff.com",
-        "footballoutsiders.com",
-        "4for4.com",
         "cbssports.com",
         "rotoballer.com",
+        "footballguys.com",
+        "sleeper.com"
     ]
     
     # Sources to exclude (social media, forums)
@@ -171,8 +171,8 @@ class TavilyFantasyClient:
             List of search results with injury information
         """
         query = (
-            f"Week {week} 2025 {player_name} injury report status "
-            f"fantasy start sit advice"
+            f"({player_name} 'injury' OR 'practice' OR 'DNP' OR 'questionable' OR 'out') "
+            f"week {week} site:rotowire.com OR site:espn.com"
         )
         return self._search(query, max_results=max_results)
 
@@ -198,33 +198,6 @@ class TavilyFantasyClient:
         query = (
             f"Week {week} 2025 {player_name} {scoring_format} fantasy analysis "
             f"matchup volume projection expert rankings"
-        )
-        return self._search(query, max_results=max_results)
-
-    def search_player_comparison(
-        self,
-        player1: str,
-        player2: str,
-        week: int,
-        scoring_format: str = "PPR",
-        max_results: int = 5,
-    ) -> List[Dict[str, Any]]:
-        """
-        Search for direct player comparison.
-        
-        Args:
-            player1: First player name
-            player2: Second player name
-            week: Week number
-            scoring_format: League scoring format
-            max_results: Maximum results to return (default 5)
-            
-        Returns:
-            List of search results comparing the two players
-        """
-        query = (
-            f"Week {week} 2025 {player1} vs {player2} fantasy "
-            f"{scoring_format} start sit comparison"
         )
         return self._search(query, max_results=max_results)
 
@@ -254,50 +227,50 @@ class TavilyFantasyClient:
         )
         return self._search(query, max_results=max_results)
 
-    def search_schedule_strength(
+    def search_player_usage_trends(
         self,
         player_name: str,
-        weeks: str = "playoffs",
-        max_results: int = 4,
+        week: int,
+        max_results: int = 5,
     ) -> List[Dict[str, Any]]:
         """
-        Search for schedule strength analysis.
+        Search for player usage trends and snap share data.
         
         Args:
             player_name: Full player name
-            weeks: Which weeks to analyze (playoffs, ROS, etc.)
-            max_results: Maximum results to return (default 4)
+            week: Week number
+            max_results: Maximum results to return (default 5)
             
         Returns:
-            List of search results with schedule analysis
+            List of search results with usage trend data
         """
-        weeks_text = "weeks 15 16 17" if weeks == "playoffs" else "rest of season"
         query = (
-            f"{player_name} 2025 fantasy football {weeks} schedule strength "
-            f"{weeks_text} outlook"
+            f"{player_name} snap share last 4 weeks "
+            f"site:pro-football-reference.com OR site:playerprofiler.com OR "
+            f"\"snap\" \"routes\" \"target share\" \"{player_name}\""
         )
         return self._search(query, max_results=max_results)
 
-    def search_weather(
+    def search_vegas_odds(
         self,
-        game_location: str,
+        player_or_team_name: str,
         week: int,
-        max_results: int = 3,
+        max_results: int = 2,
     ) -> List[Dict[str, Any]]:
         """
-        Search for weather forecast and fantasy impact.
+        Search for Vegas odds and betting lines.
         
         Args:
-            game_location: City or stadium name
+            player_or_team_name: Player or team name
             week: Week number
-            max_results: Maximum results to return (default 3)
+            max_results: Maximum results to return (default 2)
             
         Returns:
-            List of search results with weather information
+            List of search results with odds information
         """
         query = (
-            f"Week {week} 2025 NFL {game_location} weather forecast "
-            f"fantasy football impact"
+            f"game odds {player_or_team_name} week {week} over/under spread "
+            f"implied total 'odds' 'over/under' 'implied points'"
         )
         return self._search(query, max_results=max_results)
 
