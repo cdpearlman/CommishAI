@@ -50,19 +50,28 @@ def get_tavily_client() -> TavilyFantasyClient:
 # ============================================================================
 
 @mcp.tool()
-def get_roster() -> str:
+def get_roster(team_id: int = None) -> str:
     """
     Get the full roster for your ESPN Fantasy Football team.
+
+    Args:
+        team_id: Optional team ID to query. If not provided, uses TEAM_ID from .env file
 
     Returns:
         JSON string with roster grouped by position, including player stats and injury info
     """
     try:
-        if LEAGUE_ID == 0 or TEAM_ID == 0:
-            return json.dumps({"error": "LEAGUE_ID and TEAM_ID must be set in .env file"})
+        if LEAGUE_ID == 0:
+            return json.dumps({"error": "LEAGUE_ID must be set in .env file"})
+        
+        # Use provided team_id or fall back to env variable
+        if team_id is None:
+            if TEAM_ID == 0:
+                return json.dumps({"error": "TEAM_ID must be set in .env file or team_id parameter must be provided"})
+            team_id = TEAM_ID
         
         client = get_espn_client()
-        roster = client.get_roster(LEAGUE_ID, TEAM_ID, YEAR)
+        roster = client.get_roster(LEAGUE_ID, team_id, YEAR)
         return json.dumps(roster, indent=2)
     except Exception as e:
         return json.dumps({"error": str(e)})
