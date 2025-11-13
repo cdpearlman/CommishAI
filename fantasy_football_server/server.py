@@ -145,7 +145,7 @@ def summarize_players(
         all_results = {}
         
         for player_name in player_names:
-            results = client.search_player_matchup(
+            results = client.summarize_players(
                 player_name, week, scoring_format, max_results=2
             )
             all_results[player_name] = results
@@ -169,7 +169,7 @@ def injury_report(player_name: str, week: int) -> str:
     """
     try:
         client = get_tavily_client()
-        results = client.search_injury_report(player_name, week, max_results=4)
+        results = client.injury_report(player_name, week, max_results=4)
         return json.dumps(results, indent=2)
     except Exception as e:
         return json.dumps({"error": str(e)})
@@ -177,23 +177,24 @@ def injury_report(player_name: str, week: int) -> str:
 
 @mcp.tool()
 def analyze_player(
-    player_name: str, week: int, scoring_format: str = "PPR"
+    player_name: str, week: int, position: str, scoring_format: str = "PPR"
 ) -> str:
     """
-    Get comprehensive in-depth analysis of a player.
+    Get comprehensive in-depth analysis of a player with position-specific metrics.
 
     Args:
         player_name: Full name of the player
         week: Week number
+        position: Player position (QB, RB, WR, TE, K, DEF, other)
         scoring_format: League scoring format (PPR, Half-PPR, Standard)
 
     Returns:
-        JSON string with detailed analysis including matchup, volume, rankings (4-6 results)
+        JSON string with detailed analysis including position-specific metrics and ROS rankings
     """
     try:
         client = get_tavily_client()
-        results = client.search_player_analysis(
-            player_name, week, scoring_format, max_results=6
+        results = client.analyze_player(
+            player_name, week, position, scoring_format
         )
         return json.dumps(results, indent=2)
     except Exception as e:
@@ -217,7 +218,7 @@ def find_best_adds(
     """
     try:
         client = get_tavily_client()
-        results = client.search_waiver_wire(
+        results = client.find_best_adds(
             week, position, scoring_format, max_results=6
         )
         return json.dumps(results, indent=2)
@@ -226,20 +227,41 @@ def find_best_adds(
 
 
 @mcp.tool()
-def search_player_usage_trends(player_name: str, week: int) -> str:
+def get_player_usage_trends(player_name: str, week: int, position: str = "other") -> str:
     """
-    Search for player usage trends and snap share data.
+    Search for player usage trends with position-specific metrics.
 
     Args:
         player_name: Full name of the player
         week: Week number
+        position: Player position (RB, WR, TE, or other)
 
     Returns:
-        JSON string with usage trend data (5 results)
+        JSON string with usage trend data grouped by metric type
     """
     try:
         client = get_tavily_client()
-        results = client.search_player_usage_trends(player_name, week, max_results=5)
+        results = client.get_player_usage_trends(player_name, week, position)
+        return json.dumps(results, indent=2)
+    except Exception as e:
+        return json.dumps({"error": str(e)})
+
+
+@mcp.tool()
+def get_matchup_context(week: int, opponent: str) -> str:
+    """
+    Get matchup context for an opponent's defense.
+
+    Args:
+        week: Week number
+        opponent: Opponent team name or abbreviation
+
+    Returns:
+        JSON string with defensive matchup context including DVOA (3 results)
+    """
+    try:
+        client = get_tavily_client()
+        results = client.get_matchup_context(week, opponent)
         return json.dumps(results, indent=2)
     except Exception as e:
         return json.dumps({"error": str(e)})
@@ -279,7 +301,7 @@ def fantasy_football_search(query: str, week: int = None) -> str:
     """
     try:
         client = get_tavily_client()
-        results = client.search_custom(query, week, max_results=5)
+        results = client.fantasy_football_search(query, week, max_results=5)
         return json.dumps(results, indent=2)
     except Exception as e:
         return json.dumps({"error": str(e)})

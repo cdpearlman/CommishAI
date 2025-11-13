@@ -128,7 +128,7 @@ class TavilyFantasyClient:
         # Return prioritized list
         return tier_1 + tier_2 + other
 
-    def search_player_matchup(
+    def summarize_players(
         self,
         player_name: str,
         week: int,
@@ -153,7 +153,7 @@ class TavilyFantasyClient:
         )
         return self._search(query, max_results=max_results)
 
-    def search_injury_report(
+    def injury_report(
         self,
         player_name: str,
         week: int,
@@ -176,32 +176,68 @@ class TavilyFantasyClient:
         )
         return self._search(query, max_results=max_results)
 
-    def search_player_analysis(
+    def analyze_player(
         self,
         player_name: str,
         week: int,
+        position: str,
         scoring_format: str = "PPR",
-        max_results: int = 6,
-    ) -> List[Dict[str, Any]]:
+    ) -> Dict[str, List[Dict[str, Any]]]:
         """
-        Search for comprehensive player analysis.
+        Search for comprehensive player analysis with position-specific metrics.
         
         Args:
             player_name: Full player name
             week: Week number
+            position: Player position (QB, RB, WR, TE, K, DEF, other)
             scoring_format: League scoring format
-            max_results: Maximum results to return (default 6)
             
         Returns:
-            List of search results with detailed analysis
+            Dictionary with results grouped by metric type
         """
-        query = (
-            f"Week {week} 2025 {player_name} {scoring_format} fantasy analysis "
-            f"matchup volume projection expert rankings"
-        )
-        return self._search(query, max_results=max_results)
+        results = {}
+        
+        # Position-specific searches
+        if position == "QB":
+            # QB: CPOE + ROS rankings
+            cpoe_query = f"Week {week} 2025 {player_name} CPOE Completion Percentage Over Expected"
+            results["cpoe"] = self._search(cpoe_query, max_results=2)
+            
+        elif position == "RB":
+            # RB: RYOE + MTF + ROS rankings
+            ryoe_query = f"Week {week} 2025 {player_name} RYOE Rushing Yards Over Expected"
+            results["ryoe"] = self._search(ryoe_query, max_results=2)
+            
+            mtf_query = f"Week {week} 2025 {player_name} MTF Missed Tackles Forced per touch"
+            results["mtf"] = self._search(mtf_query, max_results=2)
+            
+        elif position in ["WR", "TE"]:
+            # WR/TE: YPRR + WOPR + ROS rankings
+            yprr_query = f"Week {week} 2025 {player_name} YPRR Yards Per Route Run"
+            results["yprr"] = self._search(yprr_query, max_results=2)
+            
+            wopr_query = f"Week {week} 2025 {player_name} WOPR Weighted Opportunity Rating"
+            results["wopr"] = self._search(wopr_query, max_results=2)
+            
+        elif position in ["K", "DEF"]:
+            # K and DEF: ROS rankings only
+            pass
+            
+        else:
+            # Other positions: General analysis
+            general_query = (
+                f"Week {week} 2025 {player_name} {scoring_format} fantasy analysis "
+                f"matchup volume projection expert rankings"
+            )
+            results["general_analysis"] = self._search(general_query, max_results=4)
+        
+        # Add ROS rankings for all positions
+        ros_query = f"Week {week} 2025 {player_name} fantasy football rest of season ROS rankings"
+        results["ros_rankings"] = self._search(ros_query, max_results=2)
+        
+        return results
 
-    def search_waiver_wire(
+    def find_best_adds(
         self,
         week: int,
         position: str = "all",
@@ -227,29 +263,67 @@ class TavilyFantasyClient:
         )
         return self._search(query, max_results=max_results)
 
-    def search_player_usage_trends(
+    def get_player_usage_trends(
         self,
         player_name: str,
         week: int,
-        max_results: int = 5,
-    ) -> List[Dict[str, Any]]:
+        position: str = "other",
+    ) -> Dict[str, List[Dict[str, Any]]]:
         """
-        Search for player usage trends and snap share data.
+        Search for player usage trends with position-specific metrics.
         
         Args:
             player_name: Full player name
             week: Week number
-            max_results: Maximum results to return (default 5)
+            position: Player position (RB, WR, TE, or other)
             
         Returns:
-            List of search results with usage trend data
+            Dictionary with results grouped by metric type
         """
-        query = (
-            f"{player_name} snap share last 4 weeks "
-            f"site:pro-football-reference.com OR site:playerprofiler.com OR "
-            f"\"snap\" \"routes\" \"target share\" \"{player_name}\""
-        )
-        return self._search(query, max_results=max_results)
+        results = {}
+        
+        # Position-specific searches
+        if position == "RB":
+            # RB: Rushing attempts percentage
+            rush_att_query = f"Week {week} 2025 {player_name} rushing attempts percentage share"
+            results["rushing_attempts_pct"] = self._search(rush_att_query, max_results=2)
+            
+        elif position in ["WR", "TE"]:
+            # WR/TE: Route Participation % + Air Yards Share
+            route_part_query = f"Week {week} 2025 {player_name} route participation percent"
+            results["route_participation"] = self._search(route_part_query, max_results=2)
+            
+            air_yards_query = f"Week {week} 2025 {player_name} air yards share AY%"
+            results["air_yards_share"] = self._search(air_yards_query, max_results=2)
+            
+        else:
+            # Other positions: General snap share and usage
+            general_query = (
+                f"{player_name} 2025 week {week} snap share last 4 weeks "
+                f"site:pro-football-reference.com OR site:playerprofiler.com OR "
+                f"\"snap\" \"routes\" \"target share\" \"{player_name}\""
+            )
+            results["general_usage"] = self._search(general_query, max_results=5)
+        
+        return results
+
+    def get_matchup_context(
+        self,
+        week: int,
+        opponent: str,
+    ) -> List[Dict[str, Any]]:
+        """
+        Search for matchup context including defensive DVOA.
+        
+        Args:
+            week: Week number
+            opponent: Opponent team name or abbreviation
+            
+        Returns:
+            List of search results with defensive matchup information
+        """
+        query = f"{opponent} 2025 week {week} Defense DVOA"
+        return self._search(query, max_results=3)
 
     def search_vegas_odds(
         self,
@@ -269,12 +343,12 @@ class TavilyFantasyClient:
             List of search results with odds information
         """
         query = (
-            f"game odds {player_or_team_name} week {week} over/under spread "
+            f"game odds {player_or_team_name} 2025 week {week} over/under spread "
             f"implied total 'odds' 'over/under' 'implied points'"
         )
         return self._search(query, max_results=max_results)
 
-    def search_custom(
+    def fantasy_football_search(
         self,
         query: str,
         week: Optional[int] = None,
