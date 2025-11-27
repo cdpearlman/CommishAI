@@ -1,25 +1,78 @@
 """ESPN Fantasy Football MCP Server using FastMCP."""
 
-import json
+import sys
 import os
-from pathlib import Path
-from typing import Any, Dict, List
-from dotenv import load_dotenv
-from fastmcp import FastMCP
 
-from espn_client import ESPNFantasyClient
-from tavily_client import TavilyFantasyClient
+# Redirect stdout to stderr to prevent any imports from corrupting the JSON-RPC stream
+# This fixes "invalid trailing data" errors caused by libraries printing to stdout
+_original_stdout = sys.stdout
+sys.stdout = sys.stderr
+
+try:
+    import json
+    from pathlib import Path
+    from typing import Any, Dict, List
+    from dotenv import load_dotenv
+    from fastmcp import FastMCP
+
+    from espn_client import ESPNFantasyClient
+    from tavily_client import TavilyFantasyClient
+finally:
+    # Restore stdout
+    sys.stdout = _original_stdout
+
+# Ensure stdout is in binary mode or UTF-8 to avoid encoding issues on Windows
+if sys.platform == "win32":
+    import io
+    try:
+        # Set newline='' to prevent automatic \n -> \r\n translation
+        sys.stdout.reconfigure(encoding='utf-8', newline='')
+        sys.stdin.reconfigure(encoding='utf-8', newline='')
+    except AttributeError:
+        pass
+
+    # Monkeypatch stdout to strip carriage returns (\r) which can cause "invalid trailing data"
+    class StripCRBuffer:
+        def __init__(self, buffer):
+            self.buffer = buffer
+            
+        def write(self, b):
+            if isinstance(b, bytes):
+                return self.buffer.write(b.replace(b'\r', b''))
+            return self.buffer.write(b)
+            
+        def flush(self):
+            self.buffer.flush()
+            
+        def __getattr__(self, name):
+            return getattr(self.buffer, name)
+
+    class StripCRStdout:
+        def __init__(self, wrapped):
+            self.wrapped = wrapped
+            if hasattr(wrapped, 'buffer'):
+                self.buffer = StripCRBuffer(wrapped.buffer)
+            else:
+                self.buffer = None
+                
+        def write(self, s):
+            if isinstance(s, str):
+                return self.wrapped.write(s.replace('\r', ''))
+            return self.wrapped.write(s)
+            
+        def flush(self):
+            self.wrapped.flush()
+            
+        def __getattr__(self, name):
+            return getattr(self.wrapped, name)
+
+    sys.stdout = StripCRStdout(sys.stdout)
 
 
 # Load environment variables from .env file in the same directory as this script
 # This ensures the .env file is found regardless of the working directory
 env_path = Path(__file__).parent / ".env"
 load_dotenv(dotenv_path=env_path)
-
-# Extract league configuration from environment variables
-LEAGUE_ID = int(os.getenv("LEAGUE_ID", "0"))
-TEAM_ID = int(os.getenv("TEAM_ID", "0"))
-YEAR = int(os.getenv("YEAR", "2025"))
 
 # Initialize FastMCP server
 mcp = FastMCP("ESPN Fantasy Football")
@@ -50,28 +103,16 @@ def get_tavily_client() -> TavilyFantasyClient:
 # ============================================================================
 
 @mcp.tool()
-def get_roster(team_id: int = None) -> str:
+def get_roster() -> str:
     """
     Get the full roster for your ESPN Fantasy Football team.
-
-    Args:
-        team_id: Optional team ID to query. If not provided, uses TEAM_ID from .env file
 
     Returns:
         JSON string with roster grouped by position, including player stats and injury info
     """
     try:
-        if LEAGUE_ID == 0:
-            return json.dumps({"error": "LEAGUE_ID must be set in .env file"})
-        
-        # Use provided team_id or fall back to env variable
-        if team_id is None:
-            if TEAM_ID == 0:
-                return json.dumps({"error": "TEAM_ID must be set in .env file or team_id parameter must be provided"})
-            team_id = TEAM_ID
-        
         client = get_espn_client()
-        roster = client.get_roster(LEAGUE_ID, team_id, YEAR)
+        roster = client.get_roster()
         return json.dumps(roster, indent=2)
     except Exception as e:
         return json.dumps({"error": str(e)})
@@ -89,11 +130,8 @@ def is_available(player_name: str) -> bool:
         True if player is available, False if rostered or not found
     """
     try:
-        if LEAGUE_ID == 0:
-            return False
-        
         client = get_espn_client()
-        return client.is_available(LEAGUE_ID, player_name, YEAR)
+        return client.is_available(player_name)
     except Exception as e:
         return False
 
@@ -111,11 +149,8 @@ def get_top_available(position: str, count: int = 10) -> str:
         JSON string with list of top available players sorted by projected points
     """
     try:
-        if LEAGUE_ID == 0:
-            return json.dumps({"error": "LEAGUE_ID must be set in .env file"})
-        
         client = get_espn_client()
-        players = client.get_top_available(LEAGUE_ID, position, count, YEAR)
+        players = client.get_top_available(position, count)
         return json.dumps(players, indent=2)
     except Exception as e:
         return json.dumps({"error": str(e)})
@@ -313,5 +348,5 @@ def fantasy_football_search(query: str, week: int = None) -> str:
 
 if __name__ == "__main__":
     # Run the MCP server
-    mcp.run()
+    mcp.run(transport='stdio', show_banner=False, log_level="ERROR")
 
