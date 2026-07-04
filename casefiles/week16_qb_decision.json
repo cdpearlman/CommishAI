@@ -1,0 +1,34 @@
+{
+  "decision_type": "start/sit",
+  "week": 16,
+  "player_ids": ["jacoby_brissett", "brock_purdy"],
+  "tool_calls": [
+    {"tool_name": "analyze_player", "query": "Jacoby Brissett Week 16 QB analysis", "result": "QB8 ranking, 16.7 floor, 23.9 ceiling, +2.9% CPOE"},
+    {"tool_name": "analyze_player", "query": "Brock Purdy Week 16 QB analysis", "result": "QB7 ranking, 16.7 floor, 24.1 ceiling, +4.8% CPOE"},
+    {"tool_name": "search_vegas_odds", "query": "Arizona Cardinals Week 16", "result": "ARI implied total: 22.5, O/U 47.5 vs ATL"},
+    {"tool_name": "search_vegas_odds", "query": "San Francisco 49ers Week 16", "result": "SF implied total: 26.5, -6.5 favorites, O/U 46.5 vs IND"},
+    {"tool_name": "get_matchup_context", "query": "IND defense", "result": "IND DEF ranked 26th, allows 6.2 YPA, weak pass defense -8.6% DVOA"}
+  ],
+  "key_metrics": {
+    "brissett": {
+      "week_rank": "QB8",
+      "floor": 16.7,
+      "ceiling": 23.9,
+      "implied_points": 22.5,
+      "matchup_advantage": "ATL allows 8th most fantasy points to QBs since Week 8",
+      "consistency": "20.7+ points in all 9 starts",
+      "cpoe": "+2.9%"
+    },
+    "purdy": {
+      "week_rank": "QB7",
+      "floor": 16.7,
+      "ceiling": 24.1,
+      "implied_points": 26.5,
+      "matchup_advantage": "IND ranked 26th defense, -8.6% Def Passing DVOA",
+      "supporting_cast": "CMC healthy, favorable game script",
+      "cpoe": "+4.8%"
+    }
+  },
+  "recommended_action": "START Brock Purdy",
+  "rationale": "Purdy has higher implied team total (26.5 vs 22.5), plays against weaker IND defense (26th ranked), and better game environment as 6.5-point favorite. CMC expected healthy creates favorable game script. Monday Night Football primetime matchup."
+}

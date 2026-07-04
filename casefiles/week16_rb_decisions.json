@@ -1,0 +1,54 @@
+{
+  "decision_type": "start/sit",
+  "week": 16,
+  "situation": "60-point playoff lead - prioritize floor over ceiling",
+  "player_ids": ["christian_mccaffrey", "travis_etienne", "breece_hall", "michael_carter", "isiah_pacheco", "blake_corum"],
+  "tool_calls": [
+    {"tool_name": "analyze_player", "query": "Travis Etienne Week 16 RB analysis", "result": "RB6 ROS, 15 proj PPR, but DEN #1 vs RBs, 0.1 projected TDs"},
+    {"tool_name": "analyze_player", "query": "Breece Hall Week 16 RB analysis", "result": "RB31 over last 5 weeks, -26.2 RYOE, losing work to Isaiah Davis"},
+    {"tool_name": "analyze_player", "query": "Michael Carter Week 16 RB analysis", "result": "80.3% snap share, 18 touches last week, 62.8% route share"},
+    {"tool_name": "get_matchup_context", "query": "Denver Broncos defense", "result": "DEN DEF8 ranking, -20.5% SOS, elite run defense"},
+    {"tool_name": "get_matchup_context", "query": "New Orleans Saints defense", "result": "NO DEF2 ranking, Jets face tough matchup"},
+    {"tool_name": "get_matchup_context", "query": "Atlanta Falcons defense", "result": "ATL 9th fewest rushing yards since Week 11, improved run D"}
+  ],
+  "key_metrics": {
+    "mccaffrey": {
+      "status": "LOCK RB1",
+      "implied_team_total": 26.5,
+      "matchup": "vs IND (weak defense)",
+      "injury_status": "Healthy, expected to play"
+    },
+    "etienne": {
+      "week_rank": "RB9",
+      "matchup": "@ DEN (ranked #1 vs RBs - worst)",
+      "recent_production": "3 TDs last week, 22 RZ touches in 5 games",
+      "risk": "Denver allows fewest PPR points to RBs all season",
+      "projection": "15 PPR points, 0.1 TDs projected"
+    },
+    "hall": {
+      "week_rank": "RB18",
+      "recent_trend": "RB31 over last 5 weeks",
+      "ryoe": "-26.2 (negative rushing yards over expected)",
+      "concern": "Losing snaps to Isaiah Davis, Brady Cook at QB hurts game script",
+      "matchup": "@ NO (Saints DEF ranked #2)"
+    },
+    "carter": {
+      "snap_share": "80.3%",
+      "route_share": "62.8%",
+      "touches_last_week": 18,
+      "yards_last_week": 94,
+      "concern": "3.3 YPC, 0 explosive runs, ATL run D improved",
+      "ppr_upside": "High - 10% target share as pass-catching back"
+    },
+    "pacheco": {
+      "projection": "5.2 points",
+      "status": "BENCH - limited role in KC offense"
+    }
+  },
+  "recommended_action": {
+    "rb1": "Christian McCaffrey - LOCK START",
+    "rb2": "Travis Etienne Jr. - START (despite tough matchup, highest ceiling)",
+    "flex_consideration": "Michael Carter - high-floor option ideal for protecting 60-point lead"
+  },
+  "rationale": "CMC is elite and facing weak IND defense. For RB2, Etienne has proven scoring ability (3 TDs last week) but faces brutal DEN matchup. Hall is declining rapidly (RB31 last 5 weeks) with role erosion. Carter offers highest floor with 80% snap share and PPR upside - ideal for protecting 60-point lead."
+}

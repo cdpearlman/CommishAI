@@ -1,0 +1,140 @@
+{
+  "decision_type": "start/sit",
+  "player_ids": ["george_pickens", "courtland_sutton"],
+  "week": 16,
+  "scoring_format": "PPR",
+  "tool_calls": [
+    {
+      "tool_name": "analyze_player",
+      "query": "George Pickens Week 16 WR analysis",
+      "result": {
+        "season_stats": {"REC": 81, "YDS": 1212, "TD": 8, "TAR": 120, "AVG": 15.0},
+        "air_yards_per_game": 101.2,
+        "team_air_yards_share": "34.7%",
+        "team_target_share": "23.7%",
+        "adot": 11.5,
+        "week16_projection_footballguys": 15.15,
+        "week16_rank_footballguys": "WR11",
+        "ros_rank": "WR8"
+      }
+    },
+    {
+      "tool_name": "analyze_player",
+      "query": "Courtland Sutton Week 16 WR analysis",
+      "result": {
+        "season_stats": {"REC": 56, "YDS": 773, "TD": 5, "TAR": 100},
+        "target_share": "21.3%",
+        "team_air_yards_share": "41.0%",
+        "yprr": 1.88,
+        "yprr_since_week11": 2.19,
+        "route_participation": "90.4%",
+        "week16_projection_footballguys": 14.66,
+        "week16_rank_footballguys": "WR15",
+        "week16_ecr": "WR14",
+        "last_week_stats": {"REC": 7, "YDS": 113, "TD": 1, "PPR": 17.3}
+      }
+    },
+    {
+      "tool_name": "get_player_usage_trends",
+      "query": "George Pickens usage trends",
+      "result": {
+        "expected_targets_percentile": "93rd",
+        "air_yards_percentile": "93rd",
+        "air_yards_per_game": 99.0,
+        "team_pass_focus": "6th-most pass-focused offense (60.7% pass rate)"
+      }
+    },
+    {
+      "tool_name": "get_player_usage_trends",
+      "query": "Courtland Sutton usage trends",
+      "result": {
+        "since_week11": {
+          "target_share": "20.6%",
+          "receiving_ypg": 74,
+          "yprr": 2.19,
+          "first_read_share": "26.5%",
+          "red_zone_targets": 6,
+          "deep_targets": 6
+        }
+      }
+    },
+    {
+      "tool_name": "get_matchup_context",
+      "query": "LAC defense vs WR",
+      "result": {
+        "lac_passing_dvoa": "5th (top-tier pass defense)",
+        "lac_passing_yards_allowed": "3rd fewest",
+        "lac_passing_tds_allowed": "1st fewest"
+      }
+    },
+    {
+      "tool_name": "get_matchup_context",
+      "query": "JAX defense vs WR",
+      "result": {
+        "jax_vs_perimeter_wr_since_week10": "8th-most FPPG allowed",
+        "jax_receiving_ypg_allowed_perimeter": "8th-most",
+        "jax_two_high_rate_since_week11": "57.3%"
+      }
+    },
+    {
+      "tool_name": "search_vegas_odds",
+      "query": "Dallas Cowboys Week 16",
+      "result": {
+        "implied_total": 26.0,
+        "spread": "-2.5",
+        "over_under": 50.5,
+        "venue": "AT&T Stadium (dome)"
+      }
+    },
+    {
+      "tool_name": "search_vegas_odds",
+      "query": "Denver Broncos Week 16",
+      "result": {
+        "implied_total": 25.5,
+        "spread": "-3.5",
+        "over_under": 47.5,
+        "venue": "Empower Field at Mile High"
+      }
+    }
+  ],
+  "key_metrics": {
+    "george_pickens": {
+      "snap_share": "~89%",
+      "target_share": "23.7%",
+      "air_yards_share": "34.7%",
+      "implied_points": 26.0,
+      "projection_consensus": 15.15,
+      "injury_flags": "None",
+      "ros_value_rank": "WR8",
+      "week16_rank": "WR11",
+      "opponent_pass_dvoa": "5th (tough matchup)",
+      "game_environment": "Dome, high O/U (50.5)"
+    },
+    "courtland_sutton": {
+      "snap_share": "86.9%",
+      "target_share": "21.3%",
+      "air_yards_share": "41.0%",
+      "implied_points": 25.5,
+      "projection_consensus": 14.66,
+      "injury_flags": "None",
+      "ros_value_rank": "WR21",
+      "week16_rank": "WR14-15",
+      "opponent_pass_dvoa": "Allows 8th-most FPPG to perimeter WRs (plus matchup)",
+      "recent_form": "17.3 PPR last week, 2.19 YPRR since Week 11"
+    }
+  },
+  "analysis_summary": {
+    "matchup_advantage": "SUTTON (JAX allows 8th-most FPPG vs perimeter WRs; LAC is 5th in passing DVOA)",
+    "vegas_advantage": "PICKENS (26 implied vs 25.5; 50.5 O/U vs 47.5)",
+    "volume_advantage": "PICKENS (93rd percentile targets expected; higher team pass rate)",
+    "recent_form_advantage": "SUTTON (17.3 pts last week; 2.19 YPRR since Week 11)",
+    "projection_split": "Mixed (FootballGuys: Pickens +0.49; Blueprint: Sutton +2.9)"
+  },
+  "recommended_action": "START COURTLAND SUTTON",
+  "confidence": "Medium-High"
+}
+
+
+
+
+

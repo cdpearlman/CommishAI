@@ -1,0 +1,54 @@
+{
+  "decision_type": "start/sit",
+  "week": 16,
+  "situation": "60-point playoff lead - prioritize floor over ceiling",
+  "player_ids": ["jaxon_smith_njigba", "drake_london", "jameson_williams", "michael_wilson", "khalil_shakir"],
+  "tool_calls": [
+    {"tool_name": "injury_report", "query": "Drake London Week 16", "result": "PCL strain, missed 4 games, coach 'very hopeful' for return, limited practice"},
+    {"tool_name": "analyze_player", "query": "Jameson Williams Week 16 WR analysis", "result": "WR8 ROS, 802 yds, 6 TDs, DET implied 29 points"},
+    {"tool_name": "analyze_player", "query": "Michael Wilson Week 16 WR analysis", "result": "20.5 PPR avg last 5 weeks, 28.7% air yards share"},
+    {"tool_name": "get_matchup_context", "query": "Pittsburgh Steelers defense", "result": "PIT -10% Def Passing DVOA (15th)"},
+    {"tool_name": "get_matchup_context", "query": "Atlanta Falcons defense", "result": "ATL allows 8th most fantasy points to WRs since Week 11"}
+  ],
+  "key_metrics": {
+    "jsn": {
+      "status": "LOCK WR1",
+      "week_rank": "WR1 overall",
+      "confidence_rating": "8.65/10",
+      "floor": "Extremely high"
+    },
+    "london": {
+      "injury_status": "QUESTIONABLE - PCL strain",
+      "games_missed": 4,
+      "if_healthy_rank": "WR5",
+      "matchup": "vs ARI (2nd most fantasy points allowed to WRs)",
+      "monitor_status": "CRITICAL - check before kickoff Sunday"
+    },
+    "williams": {
+      "week_rank": "WR12",
+      "ros_rank": "WR8",
+      "implied_team_total": 29.0,
+      "yprr": "High efficiency",
+      "stats": "802 yds, 6 TDs, 17.8 avg",
+      "matchup": "vs PIT (-10% Def Passing DVOA)"
+    },
+    "wilson": {
+      "recent_production": "20.5 PPR avg last 5 weeks",
+      "without_mhj": "27.2 avg in 4 games",
+      "air_yards_share": "28.7%",
+      "target_share": "Rising with Harrison injuries",
+      "risk": "If MHJ returns, targets decrease significantly",
+      "projection": "10.7 PPR points"
+    },
+    "shakir": {
+      "projection": "6.8 PPR points",
+      "status": "BENCH - lower ceiling than alternatives"
+    }
+  },
+  "recommended_action": {
+    "wr1": "Jaxon Smith-Njigba - LOCK START",
+    "wr2": "Drake London (if active) OR Jameson Williams",
+    "flex": "Michael Wilson - excellent if Drake London OUT"
+  },
+  "rationale": "JSN is locked as WR1 overall. Drake London MUST BE MONITORED - if healthy, he's WR5 vs soft ARI secondary. Jameson Williams has elite ceiling in highest-scoring game of week (DET 29 implied). Michael Wilson has been elite without MHJ (27.2 PPR avg) but value drops if Harrison returns."
+}

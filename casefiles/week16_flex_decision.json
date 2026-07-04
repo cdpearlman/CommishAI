@@ -1,0 +1,36 @@
+{
+  "decision_type": "start/sit",
+  "week": 16,
+  "position": "FLEX",
+  "situation": "60-point playoff lead - prioritize floor over ceiling",
+  "candidates": ["travis_etienne", "michael_carter", "michael_wilson", "khalil_shakir", "breece_hall"],
+  "tool_calls": [
+    {"tool_name": "analyze_player", "query": "All FLEX candidates", "result": "See individual analyses"},
+    {"tool_name": "search_vegas_odds", "query": "Week 16 implied totals", "result": "ARI 22.5, SF 26.5, JAX 21.25, NYJ 18"}
+  ],
+  "key_metrics": {
+    "scenario_if_london_plays": {
+      "flex_choice": "Travis Etienne Jr.",
+      "rationale": "Highest ceiling RB option despite tough matchup, proven TD scorer"
+    },
+    "scenario_if_london_out": {
+      "flex_choice": "Michael Wilson",
+      "rationale": "27.2 PPR avg without MHJ, elite target share, favorable ATL matchup"
+    },
+    "floor_play_option": {
+      "flex_choice": "Michael Carter",
+      "rationale": "80% snap share, 18 touches, 62.8% route share = volume-based floor"
+    }
+  },
+  "recommended_action": {
+    "primary": "Michael Wilson (if Drake London OUT)",
+    "alternate": "Travis Etienne Jr. (if Drake London active)",
+    "floor_option": "Michael Carter (if prioritizing safety with 60-point lead)"
+  },
+  "floor_vs_ceiling_analysis": {
+    "etienne": {"floor": 8, "ceiling": 25, "risk": "DEN is #1 vs RBs"},
+    "carter": {"floor": 10, "ceiling": 16, "risk": "Low efficiency"},
+    "wilson": {"floor": 8, "ceiling": 28, "risk": "MHJ return"}
+  },
+  "final_recommendation": "With 60-point lead, Michael Carter provides highest FLOOR (80% snap share, PPR upside). Start Carter in FLEX to protect lead. If trailing or need upside, pivot to Etienne or Wilson."
+}
