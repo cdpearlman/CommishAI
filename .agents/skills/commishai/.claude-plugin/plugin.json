@@ -1,0 +1,8 @@
+{
+  "name": "commishai",
+  "version": "2.0.0",
+  "description": "ESPN fantasy football manager: weekly lineup optimization, waiver wire, and trade analysis backed by a live ESPN league CLI.",
+  "author": {
+    "name": "cdpearlman"
+  }
+}

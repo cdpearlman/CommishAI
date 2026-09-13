@@ -1,0 +1,13 @@
+# CommishAI league configuration.
+# Only the first three are required — everything else is read from ESPN's
+# league settings at runtime and only needs setting here to override.
+
+league_id: 307767605  # from your league URL: fantasy.espn.com/football/league?leagueId=XXXXXX
+team_id: 14           # your team's id (1-indexed; `ff.py doctor` lists all teams if unsure)
+year: 2026
+
+# Optional overrides / preferences
+scoring: PPR          # PPR | Half-PPR | Standard
+risk_posture: auto    # auto | floor | ceiling
+                      #   auto  = play the floor when favored, the ceiling when an underdog
+faab_budget: 100      # season FAAB budget, if your league uses FAAB
