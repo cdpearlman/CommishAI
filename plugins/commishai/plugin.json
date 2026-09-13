@@ -1,0 +1,20 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "commishai",
+  "version": "2.1.0",
+  "description": "ESPN fantasy football lineup, waiver-wire, and trade analysis backed by live league data.",
+  "author": {
+    "name": "Charles Pearlman",
+    "email": "cdpearlman@gmail.com",
+    "url": "https://github.com/cdpearlman"
+  },
+  "homepage": "https://github.com/cdpearlman/CommishAI-2026",
+  "repository": "https://github.com/cdpearlman/CommishAI-2026",
+  "keywords": [
+    "fantasy-football",
+    "espn",
+    "lineup",
+    "waivers",
+    "trades"
+  ]
+}

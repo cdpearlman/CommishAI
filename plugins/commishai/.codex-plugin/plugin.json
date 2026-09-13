@@ -1,0 +1,24 @@
+{
+  "name": "commishai",
+  "version": "2.1.0",
+  "description": "ESPN fantasy football lineup, waiver-wire, and trade analysis backed by live league data.",
+  "author": {
+    "name": "Charles Pearlman",
+    "email": "cdpearlman@gmail.com",
+    "url": "https://github.com/cdpearlman"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "CommishAI",
+    "shortDescription": "Run your ESPN fantasy football team.",
+    "longDescription": "Optimize weekly lineups, evaluate waiver moves, and construct fair trades using live data from your ESPN fantasy football league.",
+    "developerName": "Charles Pearlman",
+    "category": "Productivity",
+    "capabilities": ["Read", "Analyze"],
+    "defaultPrompt": [
+      "Set my optimal fantasy lineup this week.",
+      "Find my best waiver-wire move.",
+      "Build a trade that improves my starters."
+    ]
+  }
+}

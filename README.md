@@ -1,12 +1,13 @@
 # CommishAI 2026
 
-An ESPN fantasy football manager for Claude Code, as a skills plugin.
+An ESPN fantasy football manager packaged as skills for Claude Code, ChatGPT, and
+Codex.
 
 The [2025 version](https://github.com/cdpearlman/CommishAI) was an MCP server: 12 thin
 tools, a Tavily API key, and all the strategy stuffed into an always-on Cursor rule.
 This is the same idea rebuilt for skills — the tools are a Python CLI, the strategy
-lives in skill files that load only when relevant, and web research uses Claude's
-built-in search instead of a paid API.
+lives in skill files that load only when relevant, and web research uses the host
+model's built-in search instead of a paid API.
 
 ## Setup
 
@@ -23,7 +24,22 @@ python .claude/skills/commishai/scripts/ff.py doctor
 
 That validates config and auth, and lists every team id.
 
-## Using it
+## Using it with ChatGPT or Codex
+
+The OpenAI-compatible package lives at `plugins/commishai/`. Its portable root
+`plugin.json` works across Agent Plugin hosts, while `.codex-plugin/plugin.json`
+provides OpenAI presentation metadata. The repo-local marketplace at
+`.agents/plugins/marketplace.json` exposes it for local installation and testing.
+
+After installing the repo marketplace in the ChatGPT desktop app, ask:
+
+> set my lineup for this week
+
+The local package uses the same `league.yaml`, `.env`, and `decisions/` files at the
+repository root. ESPN credentials remain local. A public web deployment will require
+a hosted MCP service rather than local `.env` credentials.
+
+## Using it with Claude Code
 
 Open Claude Code **in this directory** and ask for what you want:
 
@@ -51,7 +67,7 @@ namespaced, so you can also invoke one directly as `/commishai:fantasy-weekly`.
 
 ## CLI
 
-`ff.py` is useful on its own, at `.claude/skills/commishai/scripts/ff.py`. Every
+`ff.py` is useful on its own, at `plugins/commishai/scripts/ff.py`. Every
 command takes `--json`, `--week N`, and `--fresh` (bypasses the 15-minute cache).
 
 | Command | What it does |
