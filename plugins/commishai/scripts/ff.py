@@ -236,8 +236,9 @@ def cmd_available(league, cfg, args) -> None:
         ["PLAYER", "POS", "TM", "OPP", "OPRK", "PROJ", "AVG", "LAST3", "OWN%", "ST%", "STATUS"],
     )
     render.line()
-    render.line("Ranked by this week's ESPN projection. OWN% is the waiver-priority tell:")
-    render.line("a low OWN% next to a high PROJ is a player the market hasn't caught up to.")
+    render.line("Sorted by ESPN weekly projection for discovery, not recommendation priority.")
+    render.line("Weigh opportunity/role first, health/matchup next, projections last; OWN% is market context.")
+    render.line("Expand the pool and check role-change targets by name; usage metrics require web research.")
     render.line("OPRK is the opponent defense's rank vs this position (1-32, higher = softer).")
 
 

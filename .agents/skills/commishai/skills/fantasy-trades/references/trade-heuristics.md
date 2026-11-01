@@ -6,10 +6,19 @@ Points already scored are sunk. A WR averaging 18/game who scored three of his
 touchdowns in one blowout is not an 18/game player. Value from here: role, offense,
 health, schedule.
 
-The fastest read on whether production is real is `ff.py player "Name"` — look at the
-actual-vs-projected column week by week. A player consistently beating projection has a
-role the market hasn't priced. A player with one enormous week and five quiet ones is a
-sell.
+Use `ff.py player "Name"` to find production changes worth investigating. Beating
+projection does not prove an expanded role, and a spike week is not automatically a
+sell. Compare recent routes, target/carry share, receiving work, and red-zone usage
+against the previous 3–4 games; then use YPRR, RYOE or other position-specific
+efficiency metrics to test sustainability. Search patterns and evidence requirements
+are in `../../fantasy-weekly/references/research.md`.
+
+Value expected opportunity and role durability first, health and remaining matchup
+environment second, and ROS projections/rankings last. In redraft, temporary lead
+work ends when the incumbent returns. Compare both sides with similar metric windows
+and price replacement value and any forced drop. Do not invent weights or count the
+same target opportunity twice through target share and WOPR. If role evidence is
+missing, state that limitation rather than treating a rank or projection as proof.
 
 ## Buy low
 

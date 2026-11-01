@@ -41,20 +41,40 @@ ESPN cookies are the usual cause mid-season.
 
 ## Method
 
-**Spend research where the decision is actually close.** The snapshot's projections
-settle most of the lineup instantly. Only the genuine toss-ups — a FLEX call, a
-questionable tag, a streaming slot — earn a web search. Researching every starter is
-the failure mode of the previous version of this system: slow, expensive, and it
-changed no decisions.
+**Evaluate opportunity and role first, health and matchup second, projections last.**
+Health gates whether a player can play; assess expected workload once available.
+Use the snapshot to identify decisions, not to settle them by projection alone.
+Research close starts, proposed adds and drops, streamers, and changed roles even
+when their projections are far apart. Established healthy starters need no full
+research pass when their role is secure and there is no credible challenger.
+
+Read `references/research.md` before searching. For each consequential comparison,
+search explicitly for both players' position-specific opportunity metrics and recent
+role changes. Use efficiency metrics to explain whether production is sustainable,
+then check health, opponent, and scoring environment. Finish with ESPN and available
+expert projections as a cross-check. State missing evidence and confidence; do not
+claim a full usage comparison when only projections or one player's metrics exist.
 
 **Phase 1 — Roster management.** Identify need from the snapshot, scan the waiver
-pool, and compare each target against the weakest rosterable player you'd cut. Before
+pool, and compare each target against the weakest rosterable player you'd cut. Expand
+beyond the snapshot's top five and check availability of researched breakout and
+injury-replacement names; projection ordering can miss a newly expanded role. Before
 recommending you drop anyone injured, establish their return timeline and
 rest-of-season value first — see heuristic 2, it's the one that loses seasons.
 
+Before recommending claims, rank cross-position adds and plausible drops separately,
+then build one numbered submission queue using `references/heuristics.md`. Compare
+all plausible cuts before protecting an incumbent, and honor the manager's chosen
+drop order. Check acceptable combinations and success/failure outcomes; repeat adds
+with successive drops when needed to implement fallbacks and additional acquisitions.
+Match this league's draft-order priority; do not substitute FAAB advice. After waivers,
+use `--fresh` to re-check ownership before reprioritizing.
+
 **Phase 2 — Lineup optimization.** Set the lineup, re-checking every questionable tag
 against the latest news. The matchup's projected margin sets your risk posture: play
-the floor when favored, the ceiling when you're the underdog.
+the floor when favored, the ceiling when you're the underdog. Treat that margin as
+provisional if either lineup contains empty, injured, or bye starters; do not infer
+a safe lead from their zero projections.
 
 Read `references/heuristics.md` for the seven decision heuristics — they are the
 constitution here, and every recommendation should trace to one. Read

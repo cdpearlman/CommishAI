@@ -86,6 +86,29 @@ command takes `--json`, `--week N`, and `--fresh` (bypasses the 15-minute cache)
 
 ## Notes
 
+**Player evaluation.** Weigh opportunity and role first, health and matchup second,
+then projections and expert rankings as a cross-check. Research close decisions,
+proposed adds/drops, streamers, and changed roles with explicit position-specific
+metric searches: touches/carry share and receiving work for RBs; routes, target share,
+air yards and red-zone work for WRs/TEs; passing/rushing volume for QBs. CPOE, RYOE,
+missed tackles per touch, YPRR and WOPR provide supporting context. D/ST and K lead
+with matchup and scoring environment. Compare dated evidence for both players and
+flag missing metrics; no fixed weighted player score is calculated.
+
+The CLI provides ESPN fantasy data, not an advanced usage feed. Its free-agent lists
+are sorted by weekly projection for discovery, not by final recommendation priority.
+Expand beyond the top-five snapshot and check researched targets by name. Detailed
+search and weighting guidance lives in the weekly skill's `references/research.md`
+and `references/heuristics.md`; the trade skill uses the same evidence hierarchy.
+
+**Weekly waiver strategy.** Recommend one numbered claim queue across all positions,
+best option first and lowest priority last. Rank net roster improvement, current
+needs, rest-of-season upside, and replacement scarcity—not position order or weekly
+projection alone. Use this league's draft-order waiver priority rather than assumed
+FAAB. Each claim names its drop; fallback-only claims are clearly labeled and reuse
+the intended drop. Refresh availability after processing. Full strategy lives in
+the weekly skill's `references/heuristics.md` across all three local packages.
+
 **Read-only.** `espn-api` has no write endpoints — nothing here can set a lineup or
 process a transaction. The output is a recommendation you execute in the ESPN app.
 

@@ -23,8 +23,12 @@ python ${PLUGIN_ROOT}/scripts/ff.py league     # standings — who's buying, who
 `rosters` prints a summary table with each team's positional surplus and where they're
 thin, computed against the league's actual starting requirements. That table is the
 trade market. Follow up with `ff.py player "Name"` for anyone on either side of a
-serious offer — the week-by-week actual-vs-projected history is what tells you whether
-a hot start is real.
+serious offer. Actual-vs-projected history identifies questions; it does not establish
+whether a hot start is sustainable. Before valuing either side, read
+`../fantasy-weekly/references/research.md` for metric-specific searches and evidence
+quality. Compare opportunity and role first, health and remaining matchups second,
+then use rest-of-season projections/rankings as a cross-check. Gather the relevant
+usage metrics for both sides and distinguish persistent roles from temporary fills.
 
 `ff.py transactions` is worth a look too: a manager who just burned FAAB on a backup RB
 is telling you where they think they're weak.
@@ -33,9 +37,9 @@ is telling you where they think they're weak.
 
 1. **Value both sides rest-of-season.** Ignore points already scored. What matters is
    each player's role from here, remaining schedule, and health.
-2. **Count the starting lineup, not the roster.** A trade that upgrades your bench is a
-   loss. Compare your projected starting lineup before and after — that's the only
-   number that matters.
+2. **Count the starting lineup and useful depth.** Evaluate expected starts before and
+   after, replacement value, injury/bye coverage, and the reliability of each role.
+   Projected lineup improvement is a check, not the sole measure of trade value.
 3. **Check the roster-slot cost.** 2-for-1 consolidation improves your starters but
    forces a drop; make sure the player you'd cut isn't worth more than the upgrade.
 4. **Ask why they want it.** The other manager has a read. If they're selling a player
@@ -87,3 +91,8 @@ PITCH: "<the message to send, 2–4 sentences>"
 Always name the risk you're accepting — the injury history, the schedule, the
 role that might not hold. A trade recommendation without a stated downside is
 incomplete.
+
+Support consequential valuations with dated opportunity metrics for both sides,
+including recent trends and role durability. Explain any disagreement with projections
+or ROS rankings. Label unavailable metrics and provisional conclusions; use a range
+or qualitative improvement when a precise points-per-week estimate is unsupported.
